@@ -1,1 +1,1 @@
-(println (reduce + (concat (filter (fn[x] (not (= (mod x 5) 0))) (range 0 1000 3)) (range 0 1000 5))))
+(println (reduce + (filter (fn[x] (or (= (mod x 5) 0) (= (mod x 3) 0) )) (range 1000))))
