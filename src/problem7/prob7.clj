@@ -1,10 +1,6 @@
-(defn prime [n]
-    (if (zero? (mod n 2)) 
-        0 
-    (if (zero? (count (filter #(nil? %) 
-        (for [x (range 3 n 2)] 
-             (if (zero? (mod n x)) nil x ))))) n 0))
+(defn prime? [n]
+    (if (and (not (= n 2)) (even? n)) false (if (= n 2) true
+        (not (some #(zero? (mod n %)) (range 3 (inc (Math/ceil (Math/sqrt n))) 2)))
+)))
 
-)
-(println (nth (filter #(not (zero? %)) (map prime (range))) (dec 10001)))
-
+(println (nth (filter #(prime? %) (iterate (partial + 2) 1)) (dec 10001)))
