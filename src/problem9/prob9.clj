@@ -11,5 +11,4 @@
                     (map flatten (for [y (range 1 500)]
                         (filter #(> (count %) 0) (map flatten 
                             (for [z (range 1 500)]
-                                 (if (= 1000 (+ z x y)) [x y z])
-)))))))))))))
+                                 (if (= 1000 (+ z x y)) [x y z]))))))))))))))
