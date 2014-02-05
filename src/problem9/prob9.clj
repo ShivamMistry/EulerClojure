@@ -1,5 +1,4 @@
 ; a^2 + b^2 = c^2
-
 ; a + b + c = 1000
 ; find abc
 
@@ -8,7 +7,5 @@
         (filter #(> (count %) 0)
             (apply concat
                 (for [x (range 1 500)]
-                    (map flatten (for [y (range 1 500)]
-                        (filter #(> (count %) 0) (map flatten 
-                            (for [z (range 1 500)]
-                                 (if (= 1000 (+ z x y)) [x y z]))))))))))))))
+                    (for [y (range 1 500)]
+                       [x y (- 1000 x y)])))))))))
