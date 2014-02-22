@@ -41,4 +41,4 @@
 
 (defn run [x] (apply max (map #(apply * %) (filter identity (map x (range 0 399) (repeat 399 numbers))))))
 
-(println (max (run vertical-four) (run horizontal) (run diagonal-left) (run diagonal-right)))
+(time (max (run vertical-four) (run horizontal) (run diagonal-left) (run diagonal-right)))
