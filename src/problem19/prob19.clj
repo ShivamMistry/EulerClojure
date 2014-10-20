@@ -16,6 +16,10 @@
 
 (def start [1 1 1901])
 
+(defn year [v] (nth v 2))
+
+(defn day [v] (nth v 0))
+
 (defn month-length [mon year]
     (case mon
         1 31    2 (if (is-leap? year) 29 28)
@@ -39,14 +43,8 @@
             (def ans (assoc ans 0 (+ day 1)))     
         )
     )
-    (if (= (nth ans 0) 1) ; went from end of month to first
-        (def ans (assoc ans 1 (next-month month)))           
-        (def ans (assoc ans 1 month))
-    )
-    (if (and (= month 12) (= (nth ans 1) 1)) ; went from jan -> dec, inc year
-        (def ans (assoc ans 2 (inc year)))
-        (def ans (assoc ans 2 year))
-    )
+    (def ans (assoc ans 1 (if (= (nth ans 0) 1) (next-month month) month))) ; increment month if necessary
+    (def ans (assoc ans 2 (if (and (= month 12) (= (nth ans 1) 1)) (inc year) year))) ; increment year if necessary
     (identity ans)
 )
 
@@ -70,13 +68,7 @@
     ([v] (cons v (lazy-seq (sunday-seq (next-sunday v)))))
 )
 
-(defn year [v]
-    (nth v 2)
-)
 
-(defn day [v]
-    (nth v 0)
-)
 
 (let [last-of-year (last (take-while #(< (year %) 1901) (sunday-seq)))]
     (println (count (filter #(= (day %) 1) (take-while #(< (year %) 2001) (sunday-seq (next-sunday last-of-year))))))
