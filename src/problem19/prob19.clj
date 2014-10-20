@@ -1,19 +1,18 @@
 ; Find the number of 1st of months starting on Sunday since 1st Jan 1901 to 31st Dec 1999
-; 1st Jan 1900 was a Sunday
+; 1st Jan 1900 was a Monday
 
 (defn is-leap? [year]
     (if (zero? (mod year 4))
         (if (zero? (mod year 100)) ; check for century
-            (if (zero? (mod year 400)) true false) ; check century divisible by 400
+            (zero? (mod year 400)) ; check century divisible by 400
             true
         )
-        false
     )
 )
 
 ; The date vector is formatted as [day month year]
-
-(def first-sunday [1 1 1900])
+; If [1 1 1900] is a monday, [7 1 1900] is a sunday
+(def first-sunday [7 1 1900])
 
 (def start [1 1 1901])
 
@@ -71,6 +70,14 @@
     ([v] (cons v (lazy-seq (sunday-seq (next-sunday v)))))
 )
 
-(let [last-of-year (last (take-while #(< (nth % 2) 1901) (sunday-seq)))]
-    (println (count (filter #(= (nth % 0) 1) (take-while #(< (nth % 2) 2001) (sunday-seq (next-sunday last-of-year))))))
+(defn year [v]
+    (nth v 2)
+)
+
+(defn day [v]
+    (nth v 0)
+)
+
+(let [last-of-year (last (take-while #(< (year %) 1901) (sunday-seq)))]
+    (println (count (filter #(= (day %) 1) (take-while #(< (year %) 2001) (sunday-seq (next-sunday last-of-year))))))
 )
